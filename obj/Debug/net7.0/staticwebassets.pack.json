@@ -1,0 +1,37 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\מלי\\core\\שיעורי בית\\שיעור 2\\Chores\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "C:\\מלי\\core\\שיעורי בית\\שיעור 2\\Chores\\wwwroot\\data\\pizza.json",
+      "PackagePath": "staticwebassets\\data\\pizza.json"
+    },
+    {
+      "Id": "C:\\מלי\\core\\שיעורי בית\\שיעור 2\\Chores\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "C:\\מלי\\core\\שיעורי בית\\שיעור 2\\Chores\\wwwroot\\js\\site.js",
+      "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.ksPizza.props",
+      "PackagePath": "build\\ksPizza.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.ksPizza.props",
+      "PackagePath": "buildMultiTargeting\\ksPizza.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildTransitive.ksPizza.props",
+      "PackagePath": "buildTransitive\\ksPizza.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.ksPizza.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

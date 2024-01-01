@@ -1,0 +1,88 @@
+{
+  "Version": 1,
+  "Hash": "oHxnviJi9xkGBBBqWE1hBWjNNaV1eZPIcBJKwdgJFPI=",
+  "Source": "ksPizza",
+  "BasePath": "_content/ksPizza",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "ksPizza\\wwwroot",
+      "Source": "ksPizza",
+      "ContentRoot": "C:\\מלי\\core\\שיעורי בית\\שיעור 2\\Chores\\wwwroot\\",
+      "BasePath": "_content/ksPizza",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\מלי\\core\\שיעורי בית\\שיעור 2\\Chores\\wwwroot\\css\\site.css",
+      "SourceId": "ksPizza",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\מלי\\core\\שיעורי בית\\שיעור 2\\Chores\\wwwroot\\",
+      "BasePath": "_content/ksPizza",
+      "RelativePath": "css/site.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\site.css"
+    },
+    {
+      "Identity": "C:\\מלי\\core\\שיעורי בית\\שיעור 2\\Chores\\wwwroot\\data\\pizza.json",
+      "SourceId": "ksPizza",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\מלי\\core\\שיעורי בית\\שיעור 2\\Chores\\wwwroot\\",
+      "BasePath": "_content/ksPizza",
+      "RelativePath": "data/pizza.json",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\data\\pizza.json"
+    },
+    {
+      "Identity": "C:\\מלי\\core\\שיעורי בית\\שיעור 2\\Chores\\wwwroot\\index.html",
+      "SourceId": "ksPizza",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\מלי\\core\\שיעורי בית\\שיעור 2\\Chores\\wwwroot\\",
+      "BasePath": "_content/ksPizza",
+      "RelativePath": "index.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\index.html"
+    },
+    {
+      "Identity": "C:\\מלי\\core\\שיעורי בית\\שיעור 2\\Chores\\wwwroot\\js\\site.js",
+      "SourceId": "ksPizza",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\מלי\\core\\שיעורי בית\\שיעור 2\\Chores\\wwwroot\\",
+      "BasePath": "_content/ksPizza",
+      "RelativePath": "js/site.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\site.js"
+    }
+  ]
+}
