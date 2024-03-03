@@ -1,0 +1,7 @@
+ date: 03/03/2024 00:00:00, beginning time: 02:31:15.6776443, controller name: /index.html, action: GET, user name: unconnected, duration: 81ms.
+ date: 03/03/2024 00:00:00, beginning time: 02:31:15.7020000, controller name: /css/site.css, action: GET, user name: unconnected, duration: 7ms.
+ date: 03/03/2024 00:00:00, beginning time: 02:31:15.7115544, controller name: /js/site.js, action: GET, user name: unconnected, duration: 16ms.
+ date: 03/03/2024 00:00:00, beginning time: 02:31:15.7476902, controller name: /favicon.ico, action: GET, user name: unconnected, duration: 0ms.
+ date: 03/03/2024 00:00:00, beginning time: 02:31:15.8259478, controller name: /Chore, action: GET, user name: unconnected, duration: 85ms.
+ date: 03/03/2024 00:00:00, beginning time: 02:31:22.7878188, controller name: /Chore/3, action: PUT, user name: unconnected, duration: 48ms.
+ date: 03/03/2024 00:00:00, beginning time: 02:31:22.7934014, controller name: /Chore, action: GET, user name: unconnected, duration: 1ms.

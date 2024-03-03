@@ -1,8 +1,0 @@
-/favicon.ico.GET took 23ms. User: unknown
-/Chore.GET took 65ms. User: unknown
-/Chore/4.PUT took 54ms. User: unknown
-/Chore.GET took 0ms. User: unknown
-/Chore.POST took 40ms. User: unknown
-/Chore.GET took 0ms. User: unknown
-/Chore.POST took 3ms. User: unknown
-/Chore.GET took 0ms. User: unknown

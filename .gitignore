@@ -1,0 +1,9 @@
+.vs/
+.vscode/
+bin/
+obj/
+Properties/
+appsettings.Development.json
+appsettings.json
+core-lesson-2.code-workspace
+todoList.csproj
