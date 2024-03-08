@@ -4,13 +4,15 @@ namespace myChores.Interface;
 
 public interface IChoreService
 {
-    List<Chore> GetAll();
+    List<Chore> GetAll(int userId);
 
     Chore GetById(int id);
 
+    Chore GetById(int id, int userId);
+
     void Add(Chore newChore);
 
-    void Update(Chore newChore);
+    bool Update(int id, Chore newChore);
 
     void Delete(int id);
 }

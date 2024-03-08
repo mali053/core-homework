@@ -32,12 +32,21 @@ public class ChoreService : IChoreService
         File.WriteAllText(fileName, JsonSerializer.Serialize(Chores));
     }
 
-    public List<Chore> GetAll() => Chores;
+    public List<Chore> GetAll(int userId)
+    {
+        if(userId == 0)
+            return Chores;
+        else{
+            return Chores.Where(chore => chore.userId == userId).ToList();
+        }
+    }
 
     public Chore GetById(int id) 
     {
         return Chores.FirstOrDefault(p => p.Id == id);
     }
+
+    public Chore GetById(int id, int userId) => Chores.FirstOrDefault(p => p.Id == id && p.userId == userId);
 
     public void Add(Chore newChore)
     {
@@ -46,15 +55,19 @@ public class ChoreService : IChoreService
         saveToFile();
     }
   
-    public void Update(Chore newChore)
+    public bool Update(int id, Chore newChore)
     {
+        if (id != newChore.Id)
+            return false;
+
         var index = Chores.FindIndex(p => p.Id == newChore.Id);
         if(index == -1)
-            return;
+            return false;
 
         Chores[index] = newChore;
         saveToFile();
-    }  
+        return true;
+    }
 
       
     public void Delete(int id)
@@ -66,6 +79,11 @@ public class ChoreService : IChoreService
         Chores.Remove(chore);
         saveToFile();
     }  
+
+    public void DeleteByUserId(int userId)
+    {
+        Chores.RemoveAll(task => task.userId == userId);
+    }
 
 }
 
