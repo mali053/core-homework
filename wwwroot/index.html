@@ -24,7 +24,6 @@
     }
     input[type="text"],
     input[type="password"],
-    input[type="submit"], 
     button[type="submit"] {
         width: 100%;
         padding: 10px;
@@ -33,13 +32,11 @@
         border: 1px solid #ccc;
         border-radius: 5px;
     }
-    input[type="submit"],
     button[type="submit"] {
         background-color: #007bff;
         color: #fff;
         cursor: pointer;
     }
-    input[type="submit"]:hover,
     button[type="submit"]:hover {
         background-color: #0056b3;
     }
@@ -52,84 +49,61 @@
         border-radius: 5px;
         text-align: center;
         cursor: pointer;
+        
     }
     .google-btn:hover {
         background-color: #c1351d;
     }
+    #postmanButton {
+        margin: 10px 0;
+        background-color: orange;
+        color: #fff;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+
+    }
+
+    #postmanButton:hover {
+        background-color: darkorange;
+    }
+
 </style>
 </head>
 <body>
 
 <div class="container">
-    <form id="loginForm" action="#" method="post">
+    <form id="loginForm"  method="post">
         <h1 >Sign In</h1>
-        <input type="text" placeholder="Enter ID" maxlength="9"  pattern="[0-9]*"  required><br>
-        <input type="password" placeholder="Enter Password" required><br>
-        <button type="submit" value="Sign In">Sign In</button><br>
-        <!-- <h4>Opening a new account <a href="#" id="signUpLink">Sign Up</a></h4> -->
+        <input id="signInID" type="text" placeholder="Enter ID" maxlength="9"  pattern="[0-9]*"  required><br>
+        <input id="signInPassword" type="password" placeholder="Enter Password" required><br>
+        <button id="submitSignIn" type="submit">Sign In</button><br>
     </form>
-    <!-- <form id="signupForm" action="#" method="post" style="display: none;">
-        <h1 >Sign Up</h1>
-        <input type="text" placeholder="Enter ID" maxlength="9" pattern="\\d{9}" required><br>
-        <input type="text" placeholder="Enter Username" required><br>
-        <input type="password" placeholder="Enter Password" required><br>
-        <button id="SignUp" type="submit" value="Sign Up">Sign Up</button><br>
-        <h4>Already have an account? <a href="#" id="signInLink">Sign In</a></h4>
-    </form> -->
     <button class="google-btn">Connect with Google</button>
+    <button id="postmanButton">Open Postman</button>
+
 </div>
 
 <script>
-    // document.getElementById("signInLink").addEventListener("click", function() {
-    //     document.getElementById("signupForm").style.display = "none";
-    //     document.getElementById("loginForm").style.display = "block";
-
-    // });
-
-    // document.getElementById("signUpLink").addEventListener("click", function() {
-    //     document.getElementById("signupForm").style.display = "block";
-    //     document.getElementById("loginForm").style.display = "none";
-    // });
-
-    document.getElementById("SignUp").addEventListener("click", function() {
-
+    const postmanButton = document.getElementById("postmanButton");
+    
+    postmanButton.addEventListener("click", function() {
+        window.open('postman://app', '_blank');
     });
 
-
-const uri = '/User';
-// let pizzas = [];
-
-function getItems() {
-    fetch(uri)
+    const uri = '/todoList';
+    document.getElementById("submitSignIn").addEventListener("click", function() {
+        fetch(uri)
         .then(response => response.json())
-        .then(data => _displayItems(data))
-        .catch(error => console.error('Unable to get items.', error));
-}
-
-function addItem() {
-    const addNameTextbox = document.getElementById('add-name');
-
-    const item = {
-        isGlutenFree: false,
-        name: addNameTextbox.value.trim()
-    };
-
-    fetch(uri, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(item)
-        })
-        .then(response => response.json())
-        .then(() => {
-            getItems();
-            addNameTextbox.value = '';
-        })
-        .catch(error => console.error('Unable to add item.', error));
-}
-
+        .then(data => 
+        data.array.forEach(element => element.ID===document.getElementById("signInID") && element.password===ocument.getElementById("signInPassword")?
+       alert("fds"):alert("noooo")
+        ))
+        .catch(error => console.error('It is not possible to log in at the moment.', error));
+    });
 </script>
 
 </body>
