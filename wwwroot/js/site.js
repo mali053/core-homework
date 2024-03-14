@@ -1,8 +1,17 @@
 const uri = '/Chore';
 let pizzas = [];
+const urlParams = new URLSearchParams(window.location.search);
+const token = urlParams.get('token');
 
 function getItems() {
-    fetch(uri)
+    fetch(uri, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            // 'Accept': 'application/json',
+            // 'Content-Type': 'application/json'
+        },
+    })
         .then(response => response.json())
         .then(data => _displayItems(data))
         .catch(error => console.error('Unable to get items.', error));

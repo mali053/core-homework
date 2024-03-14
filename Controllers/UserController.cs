@@ -18,7 +18,7 @@ public class UserController : ControllerBase
         this.UserService = UserService;
     }
 
-       [HttpPost]
+        [HttpPost]
         [Route("/login")]
         public ActionResult<String> Login([FromBody] User User)
         {
