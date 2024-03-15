@@ -1,11 +1,20 @@
 const postmanButton = document.getElementById("postmanButton");
-    
+
 postmanButton.addEventListener("click", function() {
     window.open('postman://app', '_blank');
 });
 
 const uri = '/login';
 
+function processTokenAndRedirect(response) {
+    if (response.title) {
+        alert("Unexpected response. Please try again.");
+    } else {
+        window.location.href = `../tasks.html?token=${encodeURIComponent(response.token)}`;
+        // Unexpected response, show error message
+        
+    }
+}
 
 function login() {
     const id = document.getElementById('signInID').value;
@@ -18,23 +27,14 @@ function login() {
     };
 
     fetch(uri, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(user)
-        })
-        .then(response => response.json())
-        .then(token => processTokenAndRedirect(token))
-        .catch(error => console.error('Unable to add item.', error));
-}
-
-function processTokenAndRedirect(token) {
-    // Perform any processing with the token if needed
-    console.log('Token:', token);
-    
-    // Redirect to another page
-    // window.location.href = '../tasks.html';
-    window.location.href = `../tasks.html?token=${encodeURIComponent(token)}`;
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+    })
+    .then(response => response.json())
+    .then(response => processTokenAndRedirect(response))
+    .catch(error => console.error('Unable to add item.', error));
 }
