@@ -1,31 +1,115 @@
 const uri = '/Chore';
 let chores = [];
 const urlParams = new URLSearchParams(window.location.search);
-const token = urlParams.get('token');
+const token = localStorage.getItem('token');
 
 function getItems() {
-    console.log(token);
     fetch(uri, {
         method: 'GET',
         headers: {
-            'Authorization': `Bearer ${token}`,
-            // 'Accept': 'application/json',
-            // 'Content-Type': 'application/json'
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': token
         },
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error('Access denied. Please check your permissions.');
         }
         return response.json();
     })
-    .then(data => {
-        _displayItems(data);
-    })
-    .catch(error => {
-        console.error('Unable to get items.', error);
-        // Add further error handling here if needed
-    });
+    .then(data => _displayItems(data))
+    .catch(error => console.error('Unable to get items.', error));
+}
+getItems();
+
+function addItem() {
+    const addNameTextbox = document.getElementById('add-name');
+
+    const item = {
+        isGlutenFree: false,
+        name: addNameTextbox.value.trim()
+    };
+
+    fetch(uri, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+            body: JSON.stringify(item)
+        })
+        .then(response => response.json())
+        .then(() => {
+            getItems();
+            addNameTextbox.value = '';
+        })
+        .catch(error => console.error('Unable to add item.', error));
+}
+
+function deleteItem(id) {
+    fetch(`${uri}/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+        })
+        .then(() => getItems())
+        .catch(error => console.error('Unable to delete item.', error));
+}
+
+
+
+function _displayCount(count) {
+    // Implement count display logic here
+}
+
+
+function displayEditForm(id) {
+    const item = chores.find(item => item.id === id);
+
+    document.getElementById('edit-name').value = item.name;
+    document.getElementById('edit-id').value = item.id;
+    document.getElementById('edit-isGlutenFree').checked = item.isGlutenFree;
+    document.getElementById('editForm').style.display = 'block';
+}
+
+function updateItem() {
+    const itemId = document.getElementById('edit-id').value;
+    const item = {
+        id: parseInt(itemId, 10),
+        isGlutenFree: document.getElementById('edit-isGlutenFree').checked,
+        name: document.getElementById('edit-name').value.trim()
+    };
+
+    fetch(`${uri}/${itemId}`, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+            body: JSON.stringify(item)
+        })
+        .then(() => getItems())
+        .catch(error => console.error('Unable to update item.', error));
+
+    closeInput();
+
+    return false;
+}
+
+function closeInput() {
+    document.getElementById('editForm').style.display = 'none';
+}
+
+function _displayCount(itemCount) {
+    const name = (itemCount === 1) ? 'chore' : 'chore kinds';
+
+    document.getElementById('counter').innerText = `${itemCount} ${name}`;
 }
 
 function _displayItems(data) {
@@ -50,9 +134,7 @@ function _displayItems(data) {
 
         let deleteButton = button.cloneNode(false);
         deleteButton.innerText = 'Delete';
-        deleteButton.addEventListener('click', () => {
-            deleteItem(item.id);
-        });
+        deleteButton.setAttribute('onclick', `deleteItem(${item.id})`);
 
         let tr = tBody.insertRow();
 
@@ -71,16 +153,4 @@ function _displayItems(data) {
     });
 
     chores = data;
-}
-
-function displayEditForm(itemId) {
-    // Implement edit form display logic here
-}
-
-function deleteItem(itemId) {
-    // Implement item deletion logic here
-}
-
-function _displayCount(count) {
-    // Implement count display logic here
 }
