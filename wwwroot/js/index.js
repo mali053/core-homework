@@ -6,23 +6,21 @@ postmanButton.addEventListener("click", function() {
 
 const uri = '/login';
 
-function processTokenAndRedirect(response) {
-    if (response.title) {
+function processTokenAndRedirect(token) {
+    if (typeof token === 'object') {
         alert("Unexpected response. Please try again.");
     } else {
-        window.location.href = `../tasks.html?token=${encodeURIComponent(response.token)}`;
-        // Unexpected response, show error message
-        
+        localStorage.setItem('token',"Bearer "+ token);
+
+        window.location.href = `../tasks.html`;        
     }
 }
 
 function login() {
-    const id = document.getElementById('signInID').value;
     const password = document.getElementById('signInPassword').value;
     const name = document.getElementById('signInName').value;
     const user = {
         name: name,
-        id: id,
         password: password
     };
 
