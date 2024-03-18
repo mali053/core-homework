@@ -19,6 +19,7 @@ function getItems() {
         return response.json();
     })
     .then(data => _displayItems(data))
+    .then(isManager())
     .catch(error => console.error('Unable to get items.', error));
 }
 getItems();
@@ -27,7 +28,7 @@ function addItem() {
     const addNameTextbox = document.getElementById('add-name');
 
     const item = {
-        isGlutenFree: false,
+        isDone: false,
         name: addNameTextbox.value.trim()
     };
 
@@ -61,19 +62,12 @@ function deleteItem(id) {
         .catch(error => console.error('Unable to delete item.', error));
 }
 
-
-
-function _displayCount(count) {
-    // Implement count display logic here
-}
-
-
 function displayEditForm(id) {
     const item = chores.find(item => item.id === id);
-
+    
     document.getElementById('edit-name').value = item.name;
     document.getElementById('edit-id').value = item.id;
-    document.getElementById('edit-isGlutenFree').checked = item.isGlutenFree;
+    document.getElementById('edit-isDone').checked = item.isDone;
     document.getElementById('editForm').style.display = 'block';
 }
 
@@ -81,7 +75,7 @@ function updateItem() {
     const itemId = document.getElementById('edit-id').value;
     const item = {
         id: parseInt(itemId, 10),
-        isGlutenFree: document.getElementById('edit-isGlutenFree').checked,
+        isDone: document.getElementById('edit-isDone').checked,
         name: document.getElementById('edit-name').value.trim()
     };
 
@@ -121,10 +115,10 @@ function _displayItems(data) {
     const button = document.createElement('button');
 
     data.forEach(item => {
-        let isGlutenFreeCheckbox = document.createElement('input');
-        isGlutenFreeCheckbox.type = 'checkbox';
-        isGlutenFreeCheckbox.disabled = true;
-        isGlutenFreeCheckbox.checked = item.isGlutenFree;
+        let isDoneCheckbox = document.createElement('input');
+        isDoneCheckbox.type = 'checkbox';
+        isDoneCheckbox.disabled = true;
+        isDoneCheckbox.checked = item.IsDone;
 
         let editButton = button.cloneNode(false);
         editButton.innerText = 'Edit';
@@ -139,7 +133,7 @@ function _displayItems(data) {
         let tr = tBody.insertRow();
 
         let td1 = tr.insertCell(0);
-        td1.appendChild(isGlutenFreeCheckbox);
+        td1.appendChild(isDoneCheckbox);
 
         let td2 = tr.insertCell(1);
         let textNode = document.createTextNode(item.name);
@@ -153,4 +147,17 @@ function _displayItems(data) {
     });
 
     chores = data;
+}
+
+function isManager(){
+    const tokenParts = token.split('.');
+    const payload = JSON.parse(atob(tokenParts[1])); 
+    const userId = payload.id;
+
+    if(userId === '0')
+    document.getElementById('managerButton').style.display = 'block';
+}
+
+function submitManager(){
+    window.location.href = '../manager.html'
 }

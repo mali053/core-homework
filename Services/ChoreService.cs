@@ -34,11 +34,7 @@ public class ChoreService : IChoreService
 
     public List<Chore> GetAll(int userId)
     {
-        if(userId == 0)
-            return Chores;
-        else{
-            return Chores.Where(chore => chore.userId == userId).ToList();
-        }
+        return Chores.Where(chore => chore.userId == userId).ToList();
     }
 
     public Chore GetById(int id) 
