@@ -81,15 +81,13 @@ public class UserController : ControllerBase
 
     [HttpPut("{id}")]
     [Authorize(Policy = "User")]
-    public IActionResult Update(User newUser)
+    public IActionResult Update(int id, User newUser)
     {
-        var userID = User.FindFirst("id").Value;
-        var id = Convert.ToInt32(userID);
         if(id != newUser.Id)
             return BadRequest();
         
-        var existingChore = UserService.GetById(id);
-        if (existingChore is null)
+        var existingUser = UserService.GetById(id);
+        if (existingUser is null)
         {
             return NotFound();
         }
