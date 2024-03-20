@@ -54,13 +54,15 @@ public class UserController : ControllerBase
 
 
     [HttpGet]
+    [Route("/allUsers")]
     [Authorize(Policy = "Admin")]
     public ActionResult<List<User>> Get()
     {
         return UserService.GetAll();
     }
 
-    [HttpGet("{id}")]
+    [HttpGet]
+    [Route("/myUser")]
     [Authorize(Policy = "User")]
     public ActionResult<User> GetUserById()
     {
