@@ -19,23 +19,13 @@ form {
 }
 
 #editForm,
-#managerButton {
+#managerButton,
+#editUserDetails {
     display: none;
 }
 
 #managerButton {
-    display: none;
-    padding: 10px;
-    margin-top: 20px;
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#managerButton:hover {
-    background-color: #218838;
+    margin-top: 10px;
 }
 
 /* Form input styles */
@@ -72,4 +62,51 @@ th, td {
 th {
     background-color: #4CAF50;
     color: white;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.popup-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 2px;
+}
+
+button:hover {
+    background-color: #45a049;
 }

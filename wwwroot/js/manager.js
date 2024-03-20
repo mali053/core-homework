@@ -4,7 +4,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const token = localStorage.getItem('token');
 
 function getItems() {
-    fetch(uri, {
+    fetch('/allUsers', {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -148,4 +148,8 @@ function _displayItems(data) {
     });
 
     users = data;
+}
+
+function submitManager(){
+    window.location.href = '../tasks.html'
 }

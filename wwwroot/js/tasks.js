@@ -2,8 +2,19 @@ const uri = '/Chore';
 let chores = [];
 const urlParams = new URLSearchParams(window.location.search);
 const token = localStorage.getItem('token');
+const tokenParts = token.split('.');
+const payload = JSON.parse(atob(tokenParts[1]));
+const userId = payload.id;
+
+function isTokenExpired(token) {
+    const currentTime = Math.floor(Date.now() / 1000);
+
+    if(payload.exp < currentTime)
+        window.location.href = '../index.html'
+}
 
 function getItems() {
+    isTokenExpired(token);
     fetch(uri, {
         method: 'GET',
         headers: {
@@ -20,11 +31,30 @@ function getItems() {
     })
     .then(data => _displayItems(data))
     .then(isManager())
+    .then(isUser())
     .catch(error => console.error('Unable to get items.', error));
 }
 getItems();
 
+function LoadingUserDetails(){
+    fetch('/myUser', {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': token
+        },
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Problem retrieving user information.');
+        }
+        return response.json();
+    }).then(data => _displayUser(data))
+        .catch(error => console.error('Unable to get user information.', error));
+}
+
 function addItem() {
+    isTokenExpired(token);
     const addNameTextbox = document.getElementById('add-name');
 
     const item = {
@@ -100,6 +130,16 @@ function closeInput() {
     document.getElementById('editForm').style.display = 'none';
 }
 
+function editUserDetails(){
+    LoadingUserDetails()
+    document.getElementById('editDetailsPopup').style.display = 'block';
+}
+
+function closePopup(){
+    document.getElementById('editDetailsPopup').style.display = 'none';
+}
+
+
 function _displayCount(itemCount) {
     const name = (itemCount === 1) ? 'chore' : 'chore kinds';
 
@@ -150,14 +190,45 @@ function _displayItems(data) {
 }
 
 function isManager(){
-    const tokenParts = token.split('.');
-    const payload = JSON.parse(atob(tokenParts[1])); 
-    const userId = payload.id;
-
     if(userId === '0')
-    document.getElementById('managerButton').style.display = 'block';
+        document.getElementById('managerButton').style.display = 'block';
+}
+
+function isUser(){
+    console.log(userId);
+    if(userId != '0')
+        document.getElementById('editUserDetails').style.display = 'block';
 }
 
 function submitManager(){
     window.location.href = '../manager.html'
+}
+
+const updateName=document.getElementById("updateName");
+const updatePassword=document.getElementById("updatePassword");
+function _displayUser(user){
+    updateName.value=user.name;
+    updatePassword.value=user.password;
+
+}
+
+function saveDetails() {
+    const item = {
+        id: userId,
+        password: updatePassword.value.trim(),
+        name: updateName.value.trim()
+    };
+    fetch(`User/${userId}`, {
+        method: 'PUT',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': token
+        },
+        body: JSON.stringify(item)
+    })
+    .then(() => getItems())
+    .catch(error => console.error('Unable to update item.', error));
+
+    closePopup();
 }

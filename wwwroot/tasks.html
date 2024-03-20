@@ -38,7 +38,22 @@
         <tbody id="chores"></tbody>
     </table>
 
+    <button type="submit" id="editUserDetails" onclick="editUserDetails()">Edit Details</button>
+
     <button type="submit" id="managerButton" onclick="submitManager()">Management</button>
+
+    <div id="editDetailsPopup" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <form>
+                <label for="username">Username:</label>
+                <input type="text" id="updateName" ><br/>
+                <label for="password">Password:</label>
+                <input type="text" id="updatePassword" style="margin-top: 10px;"><br/>
+                <button onclick="saveDetails()" style="margin-top: 10px;">Save</button>
+            </form>
+        </div>
+    </div>
 
     <script src="js/tasks.js" asp-append-version="true"></script>
 </body>
