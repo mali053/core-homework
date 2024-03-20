@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Login</title>
+<!-- <script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="google-signin-client_id" content="1054569422333-vkpt31mqa5dftln76m1acpddgfmd8r8h.apps.googleusercontent.com"> -->
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -78,15 +81,17 @@
 <div class="container">
     <form id="loginForm" action="javascript:void(0);"  method="POST" onsubmit="login()">
         <h1 >Sign In</h1>
-        <!-- <input id="signInID" type="text" placeholder="Enter ID" maxlength="9"  pattern="[0-9]*"  required><br> -->
         <input id="signInName" type="text" placeholder="Enter name" maxlength="50" required></br>
         <input id="signInPassword" type="password" placeholder="Enter Password" required><br>
         <button id="submitSignIn" type="submit">Sign In</button><br>
     </form>
-    <button class="google-btn">Connect with Google</button>
     <button id="postmanButton">Open Postman</button>
 
-</div>
+    <div id="g_id_onload"
+        data-client_id="1054569422333-vkpt31mqa5dftln76m1acpddgfmd8r8h.apps.googleusercontent.com"
+        data-callback="handleCredentialResponse">
+    </div>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 
 <script src="./js/index.js"></script>
 
