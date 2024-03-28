@@ -59,7 +59,6 @@ handleCredentialResponse = (response) =>
             var userName = decodedToken.name; // User Name
 
             Login(userName,userId)
-            sendTokenToServer(idToken);
             
         } else {
             alert('Google Sign-In was cancelled.');

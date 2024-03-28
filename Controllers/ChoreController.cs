@@ -9,25 +9,27 @@ namespace myChores.Controllers;
 [Route("[controller]")]
 public class ChoreController : ControllerBase
 {
-    IChoreService ChoreService;
-    public ChoreController(IChoreService ChoreService)
+    private IChoreService ChoreService;
+    private readonly int UserID;
+    public ChoreController(IChoreService choreService, IHttpContextAccessor httpContextAccessor)
     {
-        this.ChoreService = ChoreService;
+        ChoreService = choreService;
+        UserID = int.Parse(httpContextAccessor.HttpContext?.User?.FindFirst("id")?.Value);
     }
+    private int GetCurrentUserID() => UserID;
+
     [HttpGet]
     [Authorize(Policy = "User")]
     public ActionResult<List<Chore>> Get()
     {
-        var userID = User.FindFirst("id").Value;
-        return ChoreService.GetAll(Convert.ToInt32(userID));
+        return ChoreService.GetAll(GetCurrentUserID());
     }
 
     [HttpGet("{id}")]
     [Authorize(Policy = "User")]
     public ActionResult<Chore> Get(int id)
     {
-        var userID = User.FindFirst("id").Value;
-        var Chore = ChoreService.GetById(id, Convert.ToInt32(userID));
+        var Chore = ChoreService.GetById(id, GetCurrentUserID());
         if (Chore == null)
             return NotFound();
         return Chore;
@@ -37,12 +39,7 @@ public class ChoreController : ControllerBase
     [Authorize(Policy = "User")]
     public IActionResult Create(Chore newChore)
     {
-        // var newId = ChoreService.Add(newChore);
-
-        // return CreatedAtAction("Post", 
-        //     new {id = newId}, ChoreService.GetById(newId));
-        var userID = User.FindFirst("id").Value;
-        newChore.userId = Convert.ToInt32(userID);
+        newChore.userId = GetCurrentUserID();
         ChoreService.Add(newChore);
         return CreatedAtAction(nameof(Create), new {id = newChore.Id}, newChore);
     }
@@ -53,13 +50,12 @@ public class ChoreController : ControllerBase
     {
         if(id != newChore.Id)
             return BadRequest();
-        var userID = User.FindFirst("id").Value;   
-        var existingChore = ChoreService.GetById(id, Convert.ToInt32(userID));
+        var existingChore = ChoreService.GetById(id, GetCurrentUserID());
         if (existingChore is null)
         {
             return NotFound();
         }
-        newChore.userId=Convert.ToInt32(userID);
+        newChore.userId=GetCurrentUserID();
         ChoreService.Update(newChore.Id, newChore);
         return NoContent();
     }
@@ -68,8 +64,7 @@ public class ChoreController : ControllerBase
     [Authorize(Policy = "User")]
     public IActionResult Delete(int id)
     {
-        var userID = User.FindFirst("id").Value;   
-        var chore = ChoreService.GetById(id, Convert.ToInt32(userID));
+        var chore = ChoreService.GetById(id, GetCurrentUserID());
         if(chore is null)
             return NotFound();
         
