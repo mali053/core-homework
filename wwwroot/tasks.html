@@ -10,14 +10,14 @@
 <body>
     <h1>Chore CRUD</h1>
     <h3>Add</h3>
-    <form action="javascript:void(0);" method="POST" onsubmit="addItem()">
+    <form action="javascript:void(0);" method="POST" onsubmit="addTask()">
         <input type="text" id="add-name" placeholder="New chore">
         <input type="submit" value="Add">
     </form>
 
     <div id="editForm">
         <h3>Edit</h3>
-        <form action="javascript:void(0);" onsubmit="updateItem()">
+        <form action="javascript:void(0);" onsubmit="updateTask()">
             <input type="hidden" id="edit-id">
             <input type="checkbox" id="edit-isDone">
             <input type="text" id="edit-name">

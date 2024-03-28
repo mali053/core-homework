@@ -3,7 +3,8 @@ let users = [];
 const urlParams = new URLSearchParams(window.location.search);
 const token = localStorage.getItem('token');
 
-function getItems() {
+//get users
+getUsers = () => {
     fetch('/allUsers', {
         method: 'GET',
         headers: {
@@ -14,16 +15,18 @@ function getItems() {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Access denied. Please check your permissions.');
+            alert('you have login again');
+            window.location.href = '../index.html';
         }
         return response.json();
     })
     .then(data => _displayItems(data))
     .catch(error => console.error('Unable to get items.', error));
 }
-getItems();
+getUsers();
 
-function addItem() {
+//add user
+addUser = () => {
     const addNameTextbox = document.getElementById('add-name');
     const addPasswordTextBox = document.getElementById('add-password');
 
@@ -43,14 +46,15 @@ function addItem() {
         })
         .then(response => response.json())
         .then(() => {
-            getItems();
+            getUsers();
             addNameTextbox.value = '';
             addPasswordTextBox.value = '';
         })
         .catch(error => console.error('Unable to add item.', error));
 }
 
-function deleteItem(id) {
+//delete user
+deleteUser = (id) => {
     fetch(`${uri}/${id}`, {
             method: 'DELETE',
             headers: {
@@ -59,11 +63,12 @@ function deleteItem(id) {
                 'Authorization': token
             },
         })
-        .then(() => getItems())
+        .then(() => getUsers())
         .catch(error => console.error('Unable to delete item.', error));
 }
 
-function displayEditForm(id) {
+//form with user's details to edit
+displayEditForm = (id) => {
     const item = users.find(item => item.id === id);
 
     document.getElementById('edit-name').value = item.name;
@@ -72,7 +77,8 @@ function displayEditForm(id) {
     document.getElementById('editForm').style.display = 'block';
 }
 
-function updateItem() {
+//update user
+updateUser = () => {
     const itemId = document.getElementById('edit-id').value;
     const item = {
         id: parseInt(itemId, 10),
@@ -89,7 +95,7 @@ function updateItem() {
             },
             body: JSON.stringify(item)
         })
-        .then(() => getItems())
+        .then(() => getUsers())
         .catch(error => console.error('Unable to update item.', error));
 
     closeInput();
@@ -97,17 +103,20 @@ function updateItem() {
     return false;
 }
 
-function closeInput() {
+//close the input that edit the user
+closeInput = () => {
     document.getElementById('editForm').style.display = 'none';
 }
 
-function _displayCount(itemCount) {
+//display the count of the users
+_displayCount = (itemCount) => {
     const name = (itemCount === 1) ? 'user' : 'user kinds';
 
     document.getElementById('counter').innerText = `${itemCount} ${name}`;
 }
 
-function _displayItems(data) {
+//display the users
+_displayItems = (data) => {
     const tBody = document.getElementById('users');
     tBody.innerHTML = '';
 
@@ -124,7 +133,7 @@ function _displayItems(data) {
 
         let deleteButton = button.cloneNode(false);
         deleteButton.innerText = 'Delete';
-        deleteButton.setAttribute('onclick', `deleteItem(${item.id})`);
+        deleteButton.setAttribute('onclick', `deleteUser(${item.id})`);
 
         let tr = tBody.insertRow();
 
@@ -150,6 +159,7 @@ function _displayItems(data) {
     users = data;
 }
 
-function submitManager(){
+//go back to the task page
+goBackToTask = () => {
     window.location.href = '../tasks.html'
 }

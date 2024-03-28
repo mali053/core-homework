@@ -85,3 +85,18 @@ th {
     background-color: #f2f2f2;
 }
 
+#managerButton {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#managerButton:hover {
+    background-color: #0056b3;
+}
+

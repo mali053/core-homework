@@ -18,7 +18,7 @@
 
     <div id="editForm">
         <h3>Edit</h3>
-        <form action="javascript:void(0);" onsubmit="updateItem()">
+        <form action="javascript:void(0);" onsubmit="updateUser()">
             <input type="hidden" id="edit-id">
             <input type="text" id="edit-name">
             <input type="text" id="edit-password">
@@ -40,7 +40,7 @@
         <tbody id="users"></tbody>
     </table>
 
-    <button type="submit" id="managerButton" onclick="submitManager()">Go Back To Tasks</button>
+    <button type="submit" id="managerButton" onclick="goBackToTask()">Go Back To Tasks</button>
 
     <script src="js/manager.js" asp-append-version="true"></script>
 </body>

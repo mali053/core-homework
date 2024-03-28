@@ -18,39 +18,38 @@ public class UserController : ControllerBase
         this.UserService = UserService;
     }
 
-        [HttpPost]
-        [Route("/login")]
-        public ActionResult<String> Login([FromBody] User User)
+[HttpPost]
+[Route("/login")]
+public ActionResult<String> Login([FromBody] User User)
+{
+    int userId = UserService.UserExists(User.Name, User.password); // Check if user exists and get user ID
+
+    if (userId != -1 && User.password == "123")
+    {
+        var claims = new List<Claim>
         {
-            var dt = DateTime.Now;
+            new Claim("type", "Admin"),
+            new Claim("id", userId.ToString()),
+        };
 
-            if (User.Name == "Admin"
-            && User.password == $"123")
-            {
-                var claims = new List<Claim>
-                {
-                    new Claim("type", "Admin"),
-                    new Claim("id", "0"),
-                };
+        var token = TokenService.GetToken(claims);
 
-                var token = TokenService.GetToken(claims);
+        return new OkObjectResult(TokenService.WriteToken(token));
+    }
+    else if (userId != -1)
+    {
+        var claims = new List<Claim>
+        {
+            new Claim("type", "User"),
+            new Claim("id", userId.ToString()),
+        };
 
-                return new OkObjectResult(TokenService.WriteToken(token));
-            }
+        var token = TokenService.GetToken(claims);
+        return new OkObjectResult(TokenService.WriteToken(token));
+    }
 
-            if (UserService.UserExists(User.Name,User.password) != -1){
-                var userId = UserService.UserExists(User.Name,User.password);
-            var claims = new List<Claim>
-            {
-                new Claim("type", "User"),
-                new Claim("id",userId.ToString()),
-            };
-            var token = TokenService.GetToken(claims);
-            return new OkObjectResult(TokenService.WriteToken(token));
-        }
-            
-            return Unauthorized();
-        }
+    return Unauthorized(); // Invalid credentials or user does not exist
+}
 
 
     [HttpGet]

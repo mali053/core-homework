@@ -19,8 +19,7 @@ form {
 }
 
 #editForm,
-#managerButton,
-#editUserDetails {
+#managerButton {
     display: none;
 }
 
