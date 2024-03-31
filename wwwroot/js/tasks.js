@@ -4,7 +4,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const token = localStorage.getItem('token');
 const tokenParts = token.split('.');
 const payload = JSON.parse(atob(tokenParts[1]));
-const userType = payload.type; 
+const userType = payload.Type; 
 const userId = payload.id;
 
 //add task function

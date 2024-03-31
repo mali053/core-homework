@@ -21,31 +21,21 @@ public class UserController : ControllerBase
     [Route("/login")]
     public ActionResult<String> Login([FromBody] User User)
     {
-        int userId = UserService.UserExists(User.Name, User.password); // Check if user exists and get user ID
+        User user = UserService.UserExists(User.Name, User.password); // Check if user exists and get user ID
 
-        if (userId != -1 && User.password == "123")
-        {
+        if (user != null)
+        { 
+           string userType = (user.status == "admin") ? "Admin" : "User";
             var claims = new List<Claim>
             {
-                new Claim("type", "Admin"),
-                new Claim("id", userId.ToString()),
-            };
-
-            var token = TokenService.GetToken(claims);
-
-            return new OkObjectResult(TokenService.WriteToken(token));
-        }
-        else if (userId != -1)
-        {
-            var claims = new List<Claim>
-            {
-                new Claim("type", "User"),
-                new Claim("id", userId.ToString()),
+                new Claim("id", user.Id.ToString()),
+                new Claim("Type", userType.ToString())
             };
 
             var token = TokenService.GetToken(claims);
             return new OkObjectResult(TokenService.WriteToken(token));
-        }
+            }
+        
 
         return Unauthorized(); // Invalid credentials or user does not exist
     }

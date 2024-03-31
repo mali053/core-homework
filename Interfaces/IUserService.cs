@@ -12,5 +12,6 @@ public interface IUserService
     void Update(User newUser);
 
     void Delete(int id);
-    int UserExists(string userName, string password);
+
+    User UserExists(string userName, string password);
 }

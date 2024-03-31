@@ -29,10 +29,12 @@ getUsers();
 addUser = () => {
     const addNameTextbox = document.getElementById('add-name');
     const addPasswordTextBox = document.getElementById('add-password');
+    const addStatusTextBox = document.getElementById('userType');
 
     const item = {
         password: addPasswordTextBox.value.trim(),
-        name: addNameTextbox.value.trim()
+        name: addNameTextbox.value.trim(),
+        status: addStatusTextBox.value.trim()
     };
 
     fetch(uri, {

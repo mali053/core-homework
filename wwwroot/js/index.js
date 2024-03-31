@@ -1,3 +1,18 @@
+//check if the token exist and required
+checkToken = () => {
+    if (localStorage.getItem('token')){
+
+        const token = localStorage.getItem('token');
+        const tokenParts = token.split('.');
+        const payload = JSON.parse(atob(tokenParts[1]));       
+        const currentTime = Math.floor(Date.now() / 1000);
+
+        if(payload.exp > currentTime)
+            window.location.href = '../tasks.html'
+    }
+}
+checkToken()
+
 //save the current token to the local storage
 processTokenAndRedirect = (token) => {
     if (typeof token === 'object') {
@@ -12,8 +27,9 @@ processTokenAndRedirect = (token) => {
 //login function
 Login = (name, password) => {
     const user = {
-        name: name,
-        password: password
+        name,
+        password,
+        status: "status"
     };
 
     fetch('/login', {
@@ -35,19 +51,6 @@ saveDetails = () => {
     const name = document.getElementById('signInName').value;
     Login(name, password)
 }
-
-//check if the token exist and required
-checkToken = () => {
-    if (localStorage.getItem('token')){
-        const token = localStorage.getItem('token');
-        var payload = token.split('.')[1];
-        const currentTime = Math.floor(Date.now() / 1000);
-
-        if(payload.exp > currentTime)
-            window.location.href = '../tasks.html'
-    }
-}
-checkToken()
 
 //handle the google button
 handleCredentialResponse = (response) =>

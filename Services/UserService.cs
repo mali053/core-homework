@@ -67,12 +67,12 @@ public class UserService : IUserService
         saveToFile();
     }  
 
-    public int UserExists(string userName, string password)
+    public User UserExists(string userName, string password)
     {
         var user = users.FirstOrDefault(user => user.Name == userName && user.password == password);
         if(user == default)
-            return -1;
-        return user.Id;
+            return null;
+        return user;
        
     }
 
