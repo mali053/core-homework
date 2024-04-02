@@ -26,19 +26,13 @@ processTokenAndRedirect = (token) => {
 
 //login function
 Login = (name, password) => {
-    const user = {
-        name,
-        password,
-        status: "status"
-    };
-
     fetch('/login', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(user)
+        body: JSON.stringify(name, password)
     })
     .then(response => response.json())
     .then(response => processTokenAndRedirect(response))

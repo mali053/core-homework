@@ -19,17 +19,16 @@ public class UserController : ControllerBase
 
     [HttpPost]
     [Route("/login")]
-    public ActionResult<String> Login([FromBody] User User)
+    public ActionResult<String> Login(string name, string password)
     {
-        User user = UserService.UserExists(User.Name, User.password); // Check if user exists and get user ID
+        User user = UserService.UserExists(name, password); // Check if user exists and get user ID
 
         if (user != null)
         { 
-           string userType = (user.status == "admin") ? "Admin" : "User";
             var claims = new List<Claim>
             {
                 new Claim("id", user.Id.ToString()),
-                new Claim("Type", userType.ToString())
+                new Claim("Type", user.status)
             };
 
             var token = TokenService.GetToken(claims);
