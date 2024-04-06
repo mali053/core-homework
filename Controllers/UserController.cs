@@ -19,9 +19,9 @@ public class UserController : ControllerBase
 
     [HttpPost]
     [Route("/login")]
-    public ActionResult<String> Login(string name, string password)
+    public ActionResult<String> Login([FromBody] User User)
     {
-        User user = UserService.UserExists(name, password); // Check if user exists and get user ID
+        User user = UserService.UserExists(User.Name, User.password); // Check if user exists and get user ID
 
         if (user != null)
         { 
@@ -51,9 +51,10 @@ public class UserController : ControllerBase
     [HttpGet]
     [Route("/myUser")]
     [Authorize(Policy = "User")]
-    public ActionResult<User> GetUserById(int id)
+    public ActionResult<User> GetUserById()
     {
-        var user = UserService.GetById(id);
+        var userID = User.FindFirst("id")?.Value;
+        var user = UserService.GetById(Convert.ToInt32(userID));
         if (user == null)
             return NotFound();
         return user;

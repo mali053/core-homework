@@ -7,7 +7,7 @@ const payload = JSON.parse(atob(tokenParts[1]));
 const userType = payload.Type; 
 const userId = payload.id;
 
-//add task function
+//Function to add new task to the database
 addTask = () => {
     const addNameTextbox = document.getElementById('add-name');
 
@@ -27,13 +27,13 @@ addTask = () => {
         })
         .then(response => response.json())
         .then(() => {
-            LoadingTasksDetails();
+            getTasks();
             addNameTextbox.value = '';
         })
         .catch(error => console.error('Unable to update item.', error));
     }
 
-//delete task function
+//Function to delete task from the database
 deleteTask = (id) => {
     fetch(`${uri}/${id}`, {
             method: 'DELETE',
@@ -43,11 +43,11 @@ deleteTask = (id) => {
                 'Authorization': token
             },
         })
-        .then(() => LoadingTasksDetails())
+        .then(() => getTasks())
         .catch(error => console.error('Unable to delete item.', error));
     }
 
-//update task function
+//Function to update task on the database
 updateTask = () => {
     const itemId = document.getElementById('edit-id').value;
     const item = {
@@ -65,7 +65,7 @@ updateTask = () => {
             },
             body: JSON.stringify(item)
         })
-        .then(() => LoadingTasksDetails())
+        .then(() => getTasks())
         .catch(error => console.error('Unable to update item.', error));
 
     closeInput();
@@ -73,7 +73,7 @@ updateTask = () => {
     return false;
 }
 
-//form for update
+//form for update task
 displayEditForm = (id) => {
     const item = chores.find(item => item.id === id);
     document.getElementById('edit-name').value = item.name;
@@ -82,7 +82,7 @@ displayEditForm = (id) => {
     document.getElementById('editForm').style.display = 'block';
 }
 
-//close the form of editing the task
+//close the form of editing task
 closeInput = () => {
     document.getElementById('editForm').style.display = 'none';
 }
@@ -113,7 +113,7 @@ _displayUser = (user) => {
     updatePassword.value=user.password;
 }
 
-//edit the user's details
+//show the edit user's details button
 editUserDetails = () =>{
     LoadingUserDetails()
     document.getElementById('editDetailsPopup').style.display = 'block';
@@ -124,7 +124,7 @@ closePopup = () =>{
     document.getElementById('editDetailsPopup').style.display = 'none';
 }
 
-//saves the user's details after he change them
+//saves the user's details after changing them
 saveDetails = () => {
     const item = {
         id: userId,
@@ -140,21 +140,21 @@ saveDetails = () => {
         },
         body: JSON.stringify(item)
     })
-    .then(() => LoadingTasksDetails())
+    .then(() => getTasks())
     .catch(error => console.error('Unable to update item.', error));
 
     closePopup();
 }
 
-//display the count of the task you have
+//Function to display the count of the task you have
 _displayCount = (itemCount) => {
     const name = (itemCount === 1) ? 'chore' : 'chore kinds';
 
     document.getElementById('counter').innerText = `${itemCount} ${name}`;
 }
 
-//display the user tasks
-_displayItems = (data) => {
+//Function to display the user tasks
+_displayTasks = (data) => {
     const tBody = document.getElementById('chores');
     tBody.innerHTML = '';
 
@@ -209,8 +209,8 @@ submitManager = () => {
     window.location.href = '../manager.html'
 }
 
-//get tasks
-LoadingTasksDetails = () => {
+//Function to get all the tasks of the current user
+getTasks = () => {
     fetch(uri, {
         method: 'GET',
         headers: {
@@ -226,8 +226,8 @@ LoadingTasksDetails = () => {
         }
         return response.json();
     })
-    .then(data => _displayItems(data))
+    .then(data => _displayTasks(data))
     .then(isManager())
     .catch(error => console.error('Unable to get item.', error));
 }
-LoadingTasksDetails();
+getTasks();

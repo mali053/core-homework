@@ -3,7 +3,7 @@ let users = [];
 const urlParams = new URLSearchParams(window.location.search);
 const token = localStorage.getItem('token');
 
-//get users
+//Function to fetch all users data from server.
 getUsers = () => {
     fetch('/allUsers', {
         method: 'GET',
@@ -20,12 +20,12 @@ getUsers = () => {
         }
         return response.json();
     })
-    .then(data => _displayItems(data))
+    .then(data => _displayUsers(data))
     .catch(error => console.error('Unable to get items.', error));
 }
 getUsers();
 
-//add user
+//Function to add new user to the database
 addUser = () => {
     const addNameTextbox = document.getElementById('add-name');
     const addPasswordTextBox = document.getElementById('add-password');
@@ -55,7 +55,7 @@ addUser = () => {
         .catch(error => console.error('Unable to add item.', error));
 }
 
-//delete user
+// Function to delete user from the database.
 deleteUser = (id) => {
     fetch(`${uri}/${id}`, {
             method: 'DELETE',
@@ -69,70 +69,15 @@ deleteUser = (id) => {
         .catch(error => console.error('Unable to delete item.', error));
 }
 
-//form with user's details to edit
-displayEditForm = (id) => {
-    const item = users.find(item => item.id === id);
-
-    document.getElementById('edit-name').value = item.name;
-    document.getElementById('edit-id').value = item.id;
-    document.getElementById('edit-password').value = item.password;
-    document.getElementById('editForm').style.display = 'block';
-}
-
-//update user
-updateUser = () => {
-    const itemId = document.getElementById('edit-id').value;
-    const item = {
-        id: parseInt(itemId, 10),
-        password: document.getElementById('edit-password').value.trim(),
-        name: document.getElementById('edit-name').value.trim()
-    };
-
-    fetch(`${uri}/${itemId}`, {
-            method: 'PUT',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': token
-            },
-            body: JSON.stringify(item)
-        })
-        .then(() => getUsers())
-        .catch(error => console.error('Unable to update item.', error));
-
-    closeInput();
-
-    return false;
-}
-
-//close the input that edit the user
-closeInput = () => {
-    document.getElementById('editForm').style.display = 'none';
-}
-
-//display the count of the users
-_displayCount = (itemCount) => {
-    const name = (itemCount === 1) ? 'user' : 'user kinds';
-
-    document.getElementById('counter').innerText = `${itemCount} ${name}`;
-}
-
 //display the users
-_displayItems = (data) => {
+_displayUsers = (data) => {
     const tBody = document.getElementById('users');
     tBody.innerHTML = '';
 
-    _displayCount(data.length);
 
     const button = document.createElement('button');
 
     data.forEach(item => {    
-        let editButton = button.cloneNode(false);
-        editButton.innerText = 'Edit';
-        editButton.addEventListener('click', () => {
-            displayEditForm(item.id);
-        });
-
         let deleteButton = button.cloneNode(false);
         deleteButton.innerText = 'Delete';
         deleteButton.setAttribute('onclick', `deleteUser(${item.id})`);
@@ -152,10 +97,7 @@ _displayItems = (data) => {
         td3.appendChild(passwordTextNode);
 
         let td4 = tr.insertCell(3);
-        td4.appendChild(editButton);
-
-        let td5 = tr.insertCell(4);
-        td5.appendChild(deleteButton);
+        td4.appendChild(deleteButton);
     });
 
     users = data;
